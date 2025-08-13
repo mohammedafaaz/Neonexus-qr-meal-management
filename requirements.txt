@@ -1,5 +1,5 @@
-flask==2.0.1
-werkzeug==2.0.1
+flask==2.2.5
+werkzeug==2.2.3
 email-validator==2.2.0
 flask-mail==0.10.0
 flask-sqlalchemy==3.0.5
@@ -7,4 +7,4 @@ gunicorn==23.0.0
 pillow==11.3.0
 psycopg2-binary==2.9.10
 qrcode[pil]==8.2.0
-sqlalchemy==2.0.43
+sqlalchemy<2.0.0
