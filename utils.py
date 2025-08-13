@@ -177,7 +177,7 @@ def send_combined_qr_email(participant_email, qr_data_list):
                     <p style="color: #555; line-height: 1.6;">Dear Participant,</p>
                     
                     <p style="color: #555; line-height: 1.6;">
-                        Your QR passes for the following sessions are attached to this email:
+                        Your QR passes for the following sessions are attached to this email use in the same order:
                     </p>
                     
                     <ul style="color: #555; line-height: 1.6;">
@@ -185,7 +185,7 @@ def send_combined_qr_email(participant_email, qr_data_list):
                     </ul>
                     
                     <p style="color: #555; line-height: 1.6;">
-                        Please save these QR codes and present them during the respective meal times for scanning.
+                        Please save these QR codes with session name (e.g. DINNER DAY-1) and present them during the respective meal times for scanning.
                     </p>
                     
                     <!-- Important Instructions -->
@@ -193,14 +193,14 @@ def send_combined_qr_email(participant_email, qr_data_list):
                         <h3 style="color: #856404; margin-top: 0; font-size: 16px;">📋 Important Instructions:</h3>
                         <ul style="color: #856404; margin-bottom: 0;">
                             <li>Each QR code is valid for <strong>ONE-TIME USE ONLY</strong></li>
-                            <li>Present the QR code on your device or print it out</li>
+                            <li>Present the QR code on your device</li>
                             <li>Each QR code is unique and non-transferable</li>
                             <li>Contact the organizers if you face any issues</li>
                         </ul>
                     </div>
                     
                     <p style="color: #555; line-height: 1.6;">
-                        Get ready for an amazing 36-hour coding journey! 💻✨
+                        All the best for the amazing 36-hour coding journey! 💻✨
                     </p>
                     
                     <p style="color: #555; line-height: 1.6;">
@@ -213,7 +213,7 @@ def send_combined_qr_email(participant_email, qr_data_list):
                 <!-- Footer -->
                 <div style="background-color: #f8f9fa; padding: 20px; text-align: center; border-top: 1px solid #e9ecef;">
                     <p style="margin: 0; color: #6c757d; font-size: 12px;">
-                        This is an automated email for NEONEXUS36.0 hackathon participants.
+                        This is an automated email for NEONEXUS36.0 hackathon participants. Please do not respond.
                     </p>
                 </div>
             </div>
