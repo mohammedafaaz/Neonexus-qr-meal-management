@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - NEONEXUS36.0{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col">
+            <h1 class="h2">
+                <i class="fas fa-cog text-primary me-2"></i>
+                Admin Dashboard
+            </h1>
+            <p class="text-muted">Manage meal sessions and QR code distribution</p>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card stat-card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon bg-primary">
+                            <i class="fas fa-qrcode"></i>
+                        </div>
+                        <div class="ms-3">
+                            <h3 class="mb-0" id="stat-total">{{ stats.total }}</h3>
+                            <p class="text-muted mb-0">Total QR Codes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card stat-card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon bg-success">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="ms-3">
+                            <h3 class="mb-0" id="stat-redeemed">{{ stats.redeemed }}</h3>
+                            <p class="text-muted mb-0">Redeemed</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card stat-card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon bg-warning">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="ms-3">
+                            <h3 class="mb-0" id="stat-remaining">{{ stats.remaining }}</h3>
+                            <p class="text-muted mb-0">Remaining</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Session Management -->
+        <div class="col-lg-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-plus-circle me-2"></i>Create New Session
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form id="sessionForm">
+                        <div class="mb-3">
+                            <label for="sessionName" class="form-label">Session Name</label>
+                            <input type="text" class="form-control" id="sessionName" placeholder="e.g., Breakfast, Lunch, Dinner" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus me-2"></i>Create Session
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Existing Sessions -->
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-list me-2"></i>Existing Sessions
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div id="sessionsList">
+                        {% if sessions %}
+                            {% for session in sessions %}
+                                <div class="session-item">
+                                    <i class="fas fa-utensils text-muted me-2"></i>
+                                    {{ session.name }}
+                                    <small class="text-muted">({{ session.created_at.strftime('%Y-%m-%d %H:%M') }})</small>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="text-muted mb-0">No sessions created yet</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- QR Code Distribution -->
+        <div class="col-lg-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-envelope me-2"></i>Send QR Codes
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form id="qrForm">
+                        <div class="mb-3">
+                            <label for="participantEmail" class="form-label">Participant Email</label>
+                            <input type="email" class="form-control" id="participantEmail" placeholder="participant@example.com" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Select Sessions</label>
+                            <div class="mb-2">
+                                <button type="button" class="btn btn-outline-primary btn-sm me-2" id="selectAllBtn">Select All</button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm" id="deselectAllBtn">Deselect All</button>
+                            </div>
+                            <div id="sessionCheckboxes">
+                                {% if sessions %}
+                                    {% for session in sessions %}
+                                        <div class="form-check">
+                                            <input class="form-check-input session-checkbox" type="checkbox" value="{{ session.name }}" id="session{{ loop.index }}">
+                                            <label class="form-check-label" for="session{{ loop.index }}">
+                                                {{ session.name }}
+                                            </label>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <p class="text-muted">No sessions available. Create a session first.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-success" {% if not sessions %}disabled{% endif %}>
+                            <i class="fas fa-paper-plane me-2"></i>Send QR Codes
+                        </button>
+                    </form>
+                    
+                    <div class="mt-3 pt-3 border-top">
+                        <button type="button" class="btn btn-danger" id="deleteAllBtn">
+                            <i class="fas fa-trash me-2"></i>Delete All Data
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Loading Modal -->
+<div class="modal fade" id="loadingModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center py-4">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-3 mb-0">Processing request...</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,336 @@
+/* Custom CSS for Neonexus36.0 - Replit Dark Theme */
+
+:root {
+    --primary-color: #008091;
+    --secondary-color: #C678DD;
+    --success-color: #98C379;
+    --warning-color: #E5C07B;
+    --danger-color: #E06C75;
+    --info-color: #61AFEF;
+    --light-color: #282C34;
+    --dark-color: #21252B;
+    --darker-color: #181A1F;
+    --text-color: #ABB2BF;
+    --text-muted: #5C6370;
+    --border-color: #3E4451;
+    --card-bg: #2C313C;
+}
+
+body {
+    background-color: var(--dark-color);
+    color: var(--text-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Hero Section */
+.hero-section {
+    background-color: var(--dark-color);
+    color: white;
+    padding: 80px 0;
+    min-height: calc(100vh - 200px);
+    display: flex;
+    align-items: center;
+}
+
+/* Navigation Cards */
+.nav-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    border-radius: 15px;
+    color: var(--text-color);
+}
+
+.nav-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    border-color: var(--primary-color);
+}
+
+.nav-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: white;
+}
+
+.nav-card .btn {
+    border-radius: 25px;
+    padding: 12px 30px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background-color: #1e3a8a;
+    border-color: #1e3a8a;
+}
+
+.nav-card .btn:hover {
+    background-color: #1e40af;
+    border-color: #1e40af;
+}
+
+/* Feature Items */
+.feature-item {
+    text-align: center;
+    padding: 20px;
+}
+
+.feature-item i {
+    font-size: 2.5rem;
+    display: block;
+}
+
+/* Statistics Cards */
+.stat-card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+}
+
+/* Cards */
+.card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+
+.card-header {
+    background-color: var(--light-color);
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 15px 15px 0 0 !important;
+    padding: 20px;
+    color: var(--text-color);
+}
+
+.card-body {
+    padding: 20px;
+    background-color: var(--card-bg);
+}
+
+/* Forms */
+.form-control, .form-select {
+    background-color: var(--light-color);
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    padding: 12px 16px;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: var(--light-color);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(86, 182, 194, 0.25);
+    color: var(--text-color);
+}
+
+.form-control::placeholder {
+    color: var(--text-muted);
+}
+
+.btn {
+    border-radius: 10px;
+    padding: 12px 24px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #4A9EAA;
+    transform: translateY(-2px);
+}
+
+/* Session Items */
+.session-item {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+
+.session-item:last-child {
+    border-bottom: none;
+}
+
+/* Redemption Items */
+.redemption-item {
+    padding: 15px;
+    background-color: var(--light-color);
+    border-radius: 10px;
+    border-left: 4px solid var(--success-color);
+    color: var(--text-color);
+}
+
+/* QR Scanner */
+#qr-reader {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Results */
+.alert {
+    border-radius: 10px;
+    border: none;
+    padding: 20px;
+    font-weight: 500;
+}
+
+.alert-success {
+    background-color: rgba(152, 195, 121, 0.15);
+    color: var(--success-color);
+    border-left: 4px solid var(--success-color);
+}
+
+.alert-danger {
+    background-color: rgba(224, 108, 117, 0.15);
+    color: var(--danger-color);
+    border-left: 4px solid var(--danger-color);
+}
+
+/* Loading Spinner */
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+
+/* Navbar */
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.nav-link {
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    transform: translateY(-2px);
+}
+
+/* Footer */
+footer {
+    margin-top: auto;
+    background-color: var(--darker-color) !important;
+    border-top: 1px solid var(--border-color);
+}
+
+/* Text colors */
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+.text-light {
+    color: var(--text-color) !important;
+}
+
+/* Form labels */
+.form-label {
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+/* Form check */
+.form-check-label {
+    color: var(--text-color);
+}
+
+.form-check-input {
+    background-color: var(--light-color);
+    border-color: var(--border-color);
+}
+
+.form-check-input:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 60px 0;
+        min-height: calc(100vh - 150px);
+    }
+    
+    .nav-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+    
+    .display-4 {
+        font-size: 2.5rem;
+    }
+    
+    .feature-item i {
+        font-size: 2rem;
+    }
+}
+
+/* Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card, .stat-card, .nav-card {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Custom checkbox styling */
+.form-check-input:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Danger zone styling */
+.border-danger {
+    border-color: var(--danger-color) !important;
+}
+
+/* Success and error states */
+.is-valid {
+    border-color: var(--success-color);
+}
+
+.is-invalid {
+    border-color: var(--danger-color);
+}
