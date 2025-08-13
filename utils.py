@@ -65,7 +65,7 @@ def send_qr_email(participant_email, session_name, qr_image_path):
                     
                     <p style="color: #555; line-height: 1.6;">
                         Your QR pass for <strong>{session_name}</strong> session is attached to this email. 
-                        Please save this QR code and present it during the meal time for scanning.
+                        Please save this QR code with the session name (Ex: DINNER DAY-1) and present it during the meal time for scanning.
                     </p>
                     
                     <!-- Important Instructions -->
@@ -85,7 +85,7 @@ def send_qr_email(participant_email, session_name, qr_image_path):
                     
                     <p style="color: #555; line-height: 1.6;">
                         Best regards,<br>
-                        <strong>Team NEONEXUS36.0</strong><br>
+                        <strong>Team NEONEXUS</strong><br>
                         BITM IEEE Student Branch
                     </p>
                 </div>
@@ -93,7 +93,7 @@ def send_qr_email(participant_email, session_name, qr_image_path):
                 <!-- Footer -->
                 <div style="background-color: #f8f9fa; padding: 20px; text-align: center; border-top: 1px solid #e9ecef;">
                     <p style="margin: 0; color: #6c757d; font-size: 12px;">
-                        This is an automated email for NEONEXUS36.0 hackathon participants.
+                        This is an automated email for NEONEXUS36.0 hackathon participants. Please do not respond.
                     </p>
                 </div>
             </div>

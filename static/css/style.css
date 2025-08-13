@@ -66,12 +66,12 @@ body {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1px;
-    background-color: #1e3a8a;
+    background-color: #008091;
     border-color: #1e3a8a;
 }
 
 .nav-card .btn:hover {
-    background-color: #1e40af;
+    background-color: #008091;
     border-color: #1e40af;
 }
 
@@ -197,6 +197,50 @@ body {
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#qr-reader video {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: cover;
+}
+
+#qr-reader__scan_region {
+    background: transparent !important;
+}
+
+#qr-reader__dashboard {
+    padding: 0 !important;
+}
+
+#qr-reader__dashboard_section_csr button {
+    display: none !important; /* Hide default camera button */
+}
+
+/* Camera Controls */
+#camera-controls {
+    margin-top: 15px;
+}
+
+#cameraSwitchBtn, #switch-camera-btn {
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    background-color: var(--light-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+
+#cameraSwitchBtn:hover, #switch-camera-btn:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
 }
 
 /* Results */

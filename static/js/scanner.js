@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let html5QrCode = null;
     let isScanning = false;
+    let availableCameras = [];
+    let currentCameraIndex = 0;
 
     // Session selection change
     sessionSelect.addEventListener('change', function() {
@@ -59,6 +61,21 @@ document.addEventListener('DOMContentLoaded', function() {
         html5QrCode = new Html5Qrcode("qr-reader");
     }
 
+    // Find the best camera (prefer rear camera)
+    function findBestCamera(cameras) {
+        // Try to find rear/back camera first
+        const rearCamera = cameras.find(camera =>
+            /(back|rear|environment|camera 2)/i.test(camera.label)
+        );
+
+        if (rearCamera) {
+            return cameras.indexOf(rearCamera);
+        }
+
+        // If no rear camera found, use the last camera (often rear on mobile)
+        return cameras.length > 1 ? cameras.length - 1 : 0;
+    }
+
     // Start scanning
     async function startScanning() {
         if (isScanning) return;
@@ -78,8 +95,15 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const cameras = await Html5Qrcode.getCameras();
             if (cameras && cameras.length > 0) {
-                const cameraId = cameras[0].id;
-                
+                availableCameras = cameras;
+
+                // If this is the first time, find the best camera
+                if (currentCameraIndex === 0) {
+                    currentCameraIndex = findBestCamera(cameras);
+                }
+
+                const cameraId = cameras[currentCameraIndex].id;
+
                 await html5QrCode.start(
                     cameraId,
                     {
@@ -95,6 +119,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 stopScanBtn.style.display = 'inline-block';
                 scanNextBtn.style.display = 'none';
                 scanResults.style.display = 'none';
+
+                // Show camera switch button if multiple cameras available
+                updateCameraSwitchButton();
             } else {
                 showResult('No cameras found. Please ensure camera access is granted.', 'danger');
             }
@@ -113,8 +140,72 @@ document.addEventListener('DOMContentLoaded', function() {
             isScanning = false;
             startScanBtn.style.display = 'inline-block';
             stopScanBtn.style.display = 'none';
+            hideCameraSwitchButton();
         } catch (error) {
             console.error('Error stopping scanner:', error);
+        }
+    }
+
+    // Switch to next camera
+    async function switchCamera() {
+        if (!isScanning || availableCameras.length <= 1) return;
+
+        try {
+            // Stop current scanning
+            await html5QrCode.stop();
+
+            // Move to next camera
+            currentCameraIndex = (currentCameraIndex + 1) % availableCameras.length;
+
+            // Start with new camera
+            const cameraId = availableCameras[currentCameraIndex].id;
+            await html5QrCode.start(
+                cameraId,
+                {
+                    fps: 10,
+                    qrbox: { width: 250, height: 250 }
+                },
+                onScanSuccess,
+                onScanFailure
+            );
+
+            updateCameraSwitchButton();
+        } catch (error) {
+            console.error('Error switching camera:', error);
+            showResult('Error switching camera: ' + error.message, 'danger');
+        }
+    }
+
+    // Update camera switch button visibility and text
+    function updateCameraSwitchButton() {
+        let switchBtn = document.getElementById('cameraSwitchBtn');
+
+        if (availableCameras.length > 1 && isScanning) {
+            if (!switchBtn) {
+                // Create the button if it doesn't exist
+                switchBtn = document.createElement('button');
+                switchBtn.id = 'cameraSwitchBtn';
+                switchBtn.className = 'btn btn-secondary ms-2';
+                switchBtn.innerHTML = '<i class="fas fa-sync-alt"></i>';
+                switchBtn.addEventListener('click', switchCamera);
+
+                // Insert after stop button
+                stopScanBtn.parentNode.insertBefore(switchBtn, stopScanBtn.nextSibling);
+            }
+
+            // Update button to show just the icon
+            switchBtn.innerHTML = '<i class="fas fa-sync-alt"></i>';
+            switchBtn.style.display = 'inline-block';
+        } else if (switchBtn) {
+            switchBtn.style.display = 'none';
+        }
+    }
+
+    // Hide camera switch button
+    function hideCameraSwitchButton() {
+        const switchBtn = document.getElementById('cameraSwitchBtn');
+        if (switchBtn) {
+            switchBtn.style.display = 'none';
         }
     }
 

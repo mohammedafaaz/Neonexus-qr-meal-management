@@ -1,0 +1,114 @@
+<div id="qr-reader"></div>
+<div id="camera-controls" style="text-align: center; margin-top: 10px; display: none;">
+    <button id="switch-camera-btn" class="btn btn-secondary">
+        <i class="fas fa-sync-alt"></i> Switch Camera
+    </button>
+</div>
+
+<script>
+    let html5QrCode = null;
+    let availableCameras = [];
+    let currentCameraIndex = 0;
+
+    // Find the best camera (prefer rear camera)
+    function findBestCamera(cameras) {
+        // Try to find rear/back camera first
+        const rearCamera = cameras.find(camera =>
+            /(back|rear|environment|camera 2)/i.test(camera.label)
+        );
+
+        if (rearCamera) {
+            return cameras.indexOf(rearCamera);
+        }
+
+        // If no rear camera found, use the last camera (often rear on mobile)
+        return cameras.length > 1 ? cameras.length - 1 : 0;
+    }
+
+    // Start scanner with specific camera
+    async function startScanner(cameraIndex = null) {
+        try {
+            if (html5QrCode && html5QrCode.getState() === Html5QrcodeScannerState.SCANNING) {
+                await html5QrCode.stop();
+            }
+
+            const devices = await Html5Qrcode.getCameras();
+            availableCameras = devices;
+
+            if (devices.length === 0) {
+                throw new Error('No cameras found');
+            }
+
+            // Use provided index or find best camera
+            if (cameraIndex !== null) {
+                currentCameraIndex = cameraIndex;
+            } else {
+                currentCameraIndex = findBestCamera(devices);
+            }
+
+            const selectedCamera = devices[currentCameraIndex];
+            const config = {
+                fps: 10,
+                qrbox: { width: 250, height: 250 },
+                aspectRatio: 1.0,
+            };
+
+            await html5QrCode.start(
+                selectedCamera.id,
+                config,
+                (decodedText) => {
+                    // Handle successful scan
+                    window.location.href = decodedText;
+                    html5QrCode.stop();
+                },
+                (error) => {
+                    // Ignore errors during scanning
+                }
+            );
+
+            // Show camera switch button if multiple cameras available
+            updateCameraControls();
+
+        } catch (err) {
+            console.error("Error starting scanner:", err);
+            document.getElementById('qr-reader').innerHTML =
+                '<div class="alert alert-danger">Camera access error. Please check permissions.</div>';
+        }
+    }
+
+    // Switch to next camera
+    async function switchCamera() {
+        if (availableCameras.length <= 1) return;
+
+        const nextIndex = (currentCameraIndex + 1) % availableCameras.length;
+        await startScanner(nextIndex);
+    }
+
+    // Update camera controls visibility and text
+    function updateCameraControls() {
+        const controlsDiv = document.getElementById('camera-controls');
+        const switchBtn = document.getElementById('switch-camera-btn');
+
+        if (availableCameras.length > 1) {
+            controlsDiv.style.display = 'block';
+
+            // Update button to show just the icon
+            switchBtn.innerHTML = '<i class="fas fa-sync-alt"></i>';
+        } else {
+            controlsDiv.style.display = 'none';
+        }
+    }
+
+    async function initializeScanner() {
+        html5QrCode = new Html5Qrcode("qr-reader");
+
+        // Add event listener for camera switch button
+        document.getElementById('switch-camera-btn').addEventListener('click', switchCamera);
+
+        // Start the scanner
+        await startScanner();
+    }
+
+    // Start scanner when page loads
+    document.addEventListener('DOMContentLoaded', initializeScanner);
+</script>
