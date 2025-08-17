@@ -99,7 +99,7 @@
                                 <div class="session-item">
                                     <i class="fas fa-utensils text-muted me-2"></i>
                                     {{ session.name }}
-                                    <small class="text-muted">({{ session.created_at.strftime('%Y-%m-%d %H:%M') }})</small>
+                                    <small class="text-muted">(<span class="session-created-at" data-created-at="{{ session.created_at.strftime('%Y-%m-%d %H:%M:%S') }}">{{ session.created_at.strftime('%Y-%m-%d %H:%M') }}</span>)</small>
                                 </div>
                             {% endfor %}
                         {% else %}

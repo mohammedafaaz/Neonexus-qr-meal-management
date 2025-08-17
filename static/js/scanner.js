@@ -268,6 +268,19 @@ document.addEventListener('DOMContentLoaded', function() {
         scanResults.style.display = 'block';
     }
 
+    // Convert UTC timestamp string ("YYYY-MM-DD HH:MM:SS") to local time string
+    function utcToLocalTimeString(utcStr) {
+        try {
+            if (!utcStr) return '';
+            const iso = utcStr.includes('T') ? utcStr : utcStr.replace(' ', 'T');
+            const date = new Date(iso.endsWith('Z') ? iso : iso + 'Z');
+            if (isNaN(date.getTime())) return utcStr;
+            return date.toLocaleTimeString();
+        } catch (e) {
+            return utcStr;
+        }
+    }
+
     // Update recent redemptions
     async function updateRecentRedemptions() {
         try {
@@ -286,7 +299,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <div>
                                     <h6 class="mb-1">${redemption.session_name}</h6>
                                     <p class="mb-1 text-muted small">${redemption.participant_email}</p>
-                                    <small class="text-muted">${new Date(redemption.redeemed_at).toLocaleTimeString()}</small>
+                                    <small class="text-muted">${utcToLocalTimeString(redemption.redeemed_at)}</small>
                                 </div>
                                 <i class="fas fa-check-circle text-success"></i>
                             </div>
@@ -309,6 +322,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Update recent redemptions every 30 seconds
+    // Refresh recent redemptions on load, then every 30 seconds
+    updateRecentRedemptions();
     setInterval(updateRecentRedemptions, 30000);
 });

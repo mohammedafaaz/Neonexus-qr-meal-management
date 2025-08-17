@@ -220,6 +220,32 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 5000);
     }
 
+    // Convert UTC timestamp string ("YYYY-MM-DD HH:MM:SS") to local time string (YYYY-MM-DD HH:MM)
+    function utcToLocalDateTime(utcStr) {
+        try {
+            if (!utcStr) return '';
+            const iso = utcStr.includes('T') ? utcStr : utcStr.replace(' ', 'T');
+            const date = new Date(iso.endsWith('Z') ? iso : iso + 'Z');
+            if (isNaN(date.getTime())) return utcStr;
+            const y = date.getFullYear();
+            const m = String(date.getMonth() + 1).padStart(2, '0');
+            const d = String(date.getDate()).padStart(2, '0');
+            const hh = String(date.getHours()).padStart(2, '0');
+            const mm = String(date.getMinutes()).padStart(2, '0');
+            return `${y}-${m}-${d} ${hh}:${mm}`;
+        } catch (e) {
+            return utcStr;
+        }
+    }
+
+    // Update session created_at timestamps to local time
+    document.querySelectorAll('.session-created-at').forEach(el => {
+        const utc = el.getAttribute('data-created-at');
+        if (utc) {
+            el.textContent = utcToLocalDateTime(utc);
+        }
+    });
+
     // Update stats every 30 seconds
     setInterval(updateStats, 30000);
 });
