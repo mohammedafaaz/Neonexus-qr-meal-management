@@ -9,6 +9,40 @@ document.addEventListener('DOMContentLoaded', function() {
     const deselectAllBtn = document.getElementById('deselectAllBtn');
     const loadingModal = new bootstrap.Modal(document.getElementById('loadingModal'));
 
+    // Persist session selection in localStorage
+    const SESSION_SELECTION_KEY = 'qr_admin_selected_sessions';
+
+    function saveSelectedSessions() {
+        const selected = Array.from(document.querySelectorAll('.session-checkbox:checked'))
+                              .map(cb => cb.value);
+        try {
+            localStorage.setItem(SESSION_SELECTION_KEY, JSON.stringify(selected));
+        } catch (e) {
+            console.warn('Unable to save selection to localStorage:', e);
+        }
+    }
+
+    function restoreSelectedSessions() {
+        try {
+            const saved = JSON.parse(localStorage.getItem(SESSION_SELECTION_KEY) || '[]');
+            if (Array.isArray(saved) && saved.length > 0) {
+                document.querySelectorAll('.session-checkbox').forEach(cb => {
+                    cb.checked = saved.includes(cb.value);
+                });
+            }
+        } catch (e) {
+            console.warn('Unable to restore selection from localStorage:', e);
+        }
+    }
+
+    // Apply any saved selection on load
+    restoreSelectedSessions();
+
+    // Save selection on change
+    document.querySelectorAll('.session-checkbox').forEach(cb => {
+        cb.addEventListener('change', saveSelectedSessions);
+    });
+
     // Session creation form
     sessionForm.addEventListener('submit', async function(e) {
         e.preventDefault();
@@ -86,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (result.success) {
                 showAlert(result.message, 'success');
                 document.getElementById('participantEmail').value = '';
-                document.querySelectorAll('.session-checkbox').forEach(cb => cb.checked = false);
+                // Keep session selections persistent
                 // Update statistics
                 updateStats();
             } else {
@@ -102,11 +136,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Select all sessions
     selectAllBtn.addEventListener('click', function() {
         document.querySelectorAll('.session-checkbox').forEach(cb => cb.checked = true);
+        saveSelectedSessions();
     });
 
     // Deselect all sessions
     deselectAllBtn.addEventListener('click', function() {
         document.querySelectorAll('.session-checkbox').forEach(cb => cb.checked = false);
+        saveSelectedSessions();
     });
 
     // Delete all data
