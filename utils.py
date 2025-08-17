@@ -205,7 +205,7 @@ def send_combined_qr_email(participant_email, qr_data_list):
                     
                     <p style="color: #555; line-height: 1.6;">
                         Best regards,<br>
-                        <strong>Team NEONEXUS36.0</strong><br>
+                        <strong>Team NEONEXUS</strong><br>
                         BITM IEEE Student Branch
                     </p>
                 </div>
