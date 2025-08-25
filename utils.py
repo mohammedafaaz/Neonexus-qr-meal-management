@@ -52,7 +52,7 @@ def send_qr_email(participant_email, session_name, qr_image_path):
         <body style="font-family: Arial, sans-serif; background-color: #f8f9fa; margin: 0; padding: 20px;">
             <div style="max-width: 600px; margin: 0 auto; background-color: white; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); overflow: hidden;">
                 <!-- Header -->
-                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center;">
+                <div style="background: linear-gradient(135deg, #667eea 50%, #764ba2 50%); color: white; padding: 30px; text-align: center;">
                     <h1 style="margin: 0; font-size: 24px; font-weight: bold;">🚀 NEONEXUS36.0</h1>
                     <p style="margin: 10px 0 0 0; font-size: 14px; opacity: 0.9;">BITM IEEE STUDENT BRANCH</p>
                 </div>
@@ -160,13 +160,14 @@ def send_combined_qr_email(participant_email, qr_data_list):
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>NEONEXUS36.0 QR Passes</title>
+            <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
         </head>
         <body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f4f4f4;">
             <div style="max-width: 600px; margin: 0 auto; background-color: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
                 
                 <!-- Header -->
-                <div style="background: linear-gradient(135deg, #6b46c1 0%, #9333ea 100%); color: white; padding: 30px; text-align: center;">
-                    <h1 style="margin: 0; font-size: 28px; font-weight: bold; letter-spacing: 2px;">NEONEXUS36.0</h1>
+                <div style="background: linear-gradient(180deg, #0F0F1A , #551abcff); color: white; padding: 30px; text-align: center;">
+                    <h1 style="margin: 0; font-size: 28px; font-weight: bold; letter-spacing: 2px; font-family: 'Orbitron', sans-serif !important;">NEONEXUS-36.0</h1>
                     <p style="margin: 10px 0 0 0; font-size: 14px; opacity: 0.9;">BITM IEEE STUDENT BRANCH</p>
                 </div>
                 
@@ -180,12 +181,12 @@ def send_combined_qr_email(participant_email, qr_data_list):
                         Your QR passes for the following sessions are attached to this email use in the same order:
                     </p>
                     
-                    <ul style="color: #555; line-height: 1.6;">
+                    <ol style="color: #555; line-height: 1.6;">
                         {session_list_html}
-                    </ul>
+                    </ol>
                     
                     <p style="color: #555; line-height: 1.6;">
-                        Please save these QR codes with session name (e.g. DINNER DAY-1) and present them during the respective meal times for scanning.
+                        Please save these QR codes with session name and present them during the respective meal times for scanning.
                     </p>
                     
                     <!-- Important Instructions -->
@@ -200,7 +201,7 @@ def send_combined_qr_email(participant_email, qr_data_list):
                     </div>
                     
                     <p style="color: #555; line-height: 1.6;">
-                        All the best for the amazing 36-hour coding journey! 💻✨
+                        All the best for the amazing 36-hour coding journey! 💻🚀
                     </p>
                     
                     <p style="color: #555; line-height: 1.6;">
